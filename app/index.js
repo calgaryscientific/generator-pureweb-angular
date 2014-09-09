@@ -57,11 +57,11 @@ var Generator = module.exports = function Generator(args, options) {
     this.env.options.coffee = this.options.coffee;
   }
 
-  this.hookFor('angular:common', {
+  this.hookFor('pureweb-angular:common', {
     args: args
   });
 
-  this.hookFor('angular:main', {
+  this.hookFor('pureweb-angular:main', {
     args: args
   });
 
@@ -120,12 +120,6 @@ var Generator = module.exports = function Generator(args, options) {
       skipMessage: this.options['skip-message'],
       callback: this._injectDependencies.bind(this)
     });
-
-    if (this.env.options.ngRoute) {
-      this.invoke('angular:route', {
-        args: ['about']
-      });
-    }
   });
 
   this.pkg = require('../package.json');
@@ -153,10 +147,9 @@ Generator.prototype.askForViewName = function askForViewName() {
     type: 'input',
     name: 'pwView',
     message: 'Would you like to call your first PureWeb view?',
-    default: true
+    default: 'FirstView'
   }], function (props) {
     this.viewName = props.pwView;    
-
     cb();
   }.bind(this));
 };
@@ -257,7 +250,6 @@ Generator.prototype.askForModules = function askForModules() {
 };
 
 Generator.prototype.readIndex = function readIndex() {
-  this.ngRoute = this.env.options.ngRoute;
   this.indexFile = this.engine(this.read('app/index.html'), this);
 };
 
@@ -284,8 +276,7 @@ Generator.prototype.createIndexHtml = function createIndexHtml() {
   this.write(path.join(this.appPath, 'index.html'), this.indexFile);
 };
 
-Generator.prototype.packageFiles = function packageFiles() {
-  this.coffee = this.env.options.coffee;
+Generator.prototype.packageFiles = function packageFiles() {  
   this.template('root/_bower.json', 'bower.json');
   this.template('root/_bowerrc', '.bowerrc');
   this.template('root/_package.json', 'package.json');

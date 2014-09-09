@@ -24,7 +24,7 @@
     "script-base.js",
     "util.js"
   ],
-  //"repository": "yeoman/generator-angular",
+  
   "scripts": {
     "test": "mocha"
   },

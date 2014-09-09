@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('<%= scriptAppName %>', [<%= angularModules %>])<% if (ngRoute) { %>
+  .module('<%= scriptAppName %>', [<%= angularModules %>])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -19,4 +19,4 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  })<% } %>;
+  });

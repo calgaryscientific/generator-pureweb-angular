@@ -38,27 +38,8 @@ var Generator = module.exports = function Generator() {
     this.env.options.testPath = this.env.options.testPath || 'test/spec';
   }
 
-  this.env.options.coffee = this.options.coffee;
-  if (typeof this.env.options.coffee === 'undefined') {
-    this.option('coffee');
-
-    // attempt to detect if user is using CS or not
-    // if cml arg provided, use that; else look for the existence of cs
-    if (!this.options.coffee &&
-      this.expandFiles(path.join(this.env.options.appPath, '/scripts/**/*.coffee'), {}).length > 0) {
-      this.options.coffee = true;
-    }
-
-    this.env.options.coffee = this.options.coffee;
-  }
-
   var sourceRoot = '/templates/javascript';
   this.scriptSuffix = '.js';
-
-  if (this.env.options.coffee) {
-    sourceRoot = '/templates/coffeescript';
-    this.scriptSuffix = '.coffee';
-  }
 
   this.sourceRoot(path.join(__dirname, sourceRoot));
 };
@@ -94,7 +75,7 @@ Generator.prototype.addScriptToIndex = function (script) {
       file: fullPath,
       needle: '<!-- endbuild -->',
       splicable: [
-        '<script src="scripts/' + script.toLowerCase().replace(/\\/g, '/') + '.js"></script>'
+        '<script src="192386419674scripts/' + script.toLowerCase().replace(/\\/g, '/') + '.js"></script>'
       ]
     });
   } catch (e) {
