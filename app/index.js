@@ -50,6 +50,10 @@ var Generator = module.exports = function Generator(args, options) {
     args: args
   });
 
+  this.hookFor('pureweb-angular:controller', {
+    args: args
+  });
+
   this.on('end', function () {
     var enabledComponents = [];
 
@@ -241,7 +245,7 @@ Generator.prototype.appJs = function appJs() {
     html: this.indexFile,
     fileType: 'js',
     optimizedPath: '/scripts/scripts.js',
-    sourceFileList: ['/'+this.appname+'/app/scripts/app.js', '/'+this.appname+'/app/scripts/controllers/main.js'],
+    sourceFileList: ['/'+this.appname+'/app/scripts/app.js', '/'+this.appname+'/app/scripts/controllers/main.js'],    
     searchPath: ['.tmp', this.appPath]
   });
 };
