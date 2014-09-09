@@ -1,8 +1,8 @@
 Description:
-    Creates a default AngularJS app
+    Creates a default PureWeb AngularJS app
 
 Example:
-    yo angular [--coffee]
+    yo pureweb-angular
 
     This will create:
         Gruntfile.js

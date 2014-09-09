@@ -162,9 +162,17 @@ module.exports = function (grunt) {
 
     // Automatically inject Bower components into the app
     wiredep: {
-      app: {
+      app: {        
         src: ['<%%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath:  /\.\.\//,
+        fileTypes: {
+          html: {
+            replace: {
+              js: '<script src="/<%%= yeoman.app %>/{{filePath}}"></script>',
+              css: '<link rel="stylesheet" href="/<%%= yeoman.app %>/{{filePath}}" />'
+            }
+          },
+        }
       }
     },
 
@@ -348,10 +356,7 @@ module.exports = function (grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'test/karma.conf.<% if (coffee) {
-          %>coffee<% } else {
-          %>js<% }
-          %>',
+        configFile: 'test/karma.conf.js',
         singleRun: true
       }
     }

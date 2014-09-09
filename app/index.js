@@ -42,21 +42,6 @@ var Generator = module.exports = function Generator(args, options) {
 
   this.appPath = this.env.options.appPath;
 
-  if (typeof this.env.options.coffee === 'undefined') {
-    this.option('coffee', {
-      desc: 'Generate CoffeeScript instead of JavaScript'
-    });
-
-    // attempt to detect if user is using CS or not
-    // if cml arg provided, use that; else look for the existence of cs
-    if (!this.options.coffee &&
-      this.expandFiles(path.join(this.appPath, '/scripts/**/*.coffee'), {}).length > 0) {
-      this.options.coffee = true;
-    }
-
-    this.env.options.coffee = this.options.coffee;
-  }
-
   this.hookFor('pureweb-angular:common', {
     args: args
   });
@@ -96,28 +81,18 @@ var Generator = module.exports = function Generator(args, options) {
       'angular/angular.js',
       'angular-mocks/angular-mocks.js'
     ].concat(enabledComponents).join(',');
-
-    var jsExt = this.options.coffee ? 'coffee' : 'js';
-
+    
     this.invoke('karma:app', {
-      options: {
-        'skip-install': this.options['skip-install'],
-        'base-path': '../',
-        'coffee': this.options.coffee,
+      options: {        
+        'base-path': '../',        
         'travis': true,
         'bower-components': enabledComponents,
-        'app-files': 'app/scripts/**/*.' + jsExt,
-        'test-files': [
-          'test/mock/**/*.' + jsExt,
-          'test/spec/**/*.' + jsExt
-        ].join(','),
+        'app-files': 'app/scripts/**/*.js',        
         'bower-components-path': 'bower_components'
       }
     });
 
     this.installDependencies({
-      skipInstall: this.options['skip-install'],
-      skipMessage: this.options['skip-message'],
       callback: this._injectDependencies.bind(this)
     });
   });
@@ -265,8 +240,8 @@ Generator.prototype.appJs = function appJs() {
   this.indexFile = this.appendFiles({
     html: this.indexFile,
     fileType: 'js',
-    optimizedPath: 'scripts/scripts.js',
-    sourceFileList: ['scripts/app.js', 'scripts/controllers/main.js'],
+    optimizedPath: '/scripts/scripts.js',
+    sourceFileList: ['/'+this.appname+'/app/scripts/app.js', '/'+this.appname+'/app/scripts/controllers/main.js'],
     searchPath: ['.tmp', this.appPath]
   });
 };
@@ -284,26 +259,18 @@ Generator.prototype.packageFiles = function packageFiles() {
 };
 
 Generator.prototype._injectDependencies = function _injectDependencies() {
-  if (this.options['skip-install']) {
-    this.log(
-      'After running `npm install & bower install`, inject your front end dependencies' +
-      '\ninto your source code by running:' +
-      '\n' +
-      '\n' + chalk.yellow.bold('grunt wiredep')
-    );
-  } else {
-    wiredep({
-      directory: 'bower_components',
-      bowerJson: JSON.parse(fs.readFileSync('./bower.json')),
-      ignorePath: new RegExp('^(' + this.appPath + '|..)/'),
-      src: 'app/index.html',
-      fileTypes: {
-        html: {
-          replace: {
-            css: '<link rel="stylesheet" href="{{filePath}}">'
-          }
+  wiredep({
+    directory: 'bower_components',
+    bowerJson: JSON.parse(fs.readFileSync('./bower.json')),
+    ignorePath: new RegExp('^(' + this.appPath + '|..)/'),
+    src: 'app/index.html',
+    fileTypes: {
+      html: {
+        replace: {
+          js: '<script src="/'+this.appname+'/{{filePath}}"></script>',
+          css: '<link rel="stylesheet" href="/'+this.appname+'/{{filePath}}">'
         }
       }
-    });
-  }
+    }
+  });  
 };
