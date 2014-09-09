@@ -65,10 +65,6 @@ var Generator = module.exports = function Generator(args, options) {
     args: args
   });
 
-  this.hookFor('angular:controller', {
-    args: args
-  });
-
   this.on('end', function () {
     var enabledComponents = [];
 
@@ -143,38 +139,29 @@ Generator.prototype.welcome = function welcome() {
     this.log(yosay());
     this.log(
       chalk.magenta(
-        'Out of the box I include Bootstrap and some AngularJS recommended modules.' +
+        'Out of the box I include PureWeb, Bootstrap and some AngularJS recommended modules.' +
         '\n'
       )
     );
   }
-
-  if (this.options.minsafe) {
-    this.log.error(
-      'The --minsafe flag has been removed. For more information, see' +
-      '\nhttps://github.com/yeoman/generator-angular#minification-safe.' +
-      '\n'
-    );
-  }
 };
 
-Generator.prototype.askForCompass = function askForCompass() {
+Generator.prototype.askForViewName = function askForViewName() {
   var cb = this.async();
 
   this.prompt([{
-    type: 'confirm',
-    name: 'compass',
-    message: 'Would you like to use Sass (with Compass)?',
+    type: 'input',
+    name: 'pwView',
+    message: 'Would you like to call your first PureWeb view?',
     default: true
   }], function (props) {
-    this.compass = props.compass;
+    this.viewName = props.pwView;    
 
     cb();
   }.bind(this));
 };
 
 Generator.prototype.askForBootstrap = function askForBootstrap() {
-  var compass = this.compass;
   var cb = this.async();
 
   this.prompt([{
@@ -182,17 +169,8 @@ Generator.prototype.askForBootstrap = function askForBootstrap() {
     name: 'bootstrap',
     message: 'Would you like to include Bootstrap?',
     default: true
-  }, {
-    type: 'confirm',
-    name: 'compassBootstrap',
-    message: 'Would you like to use the Sass version of Bootstrap?',
-    default: true,
-    when: function (props) {
-      return props.bootstrap && compass;
-    }
   }], function (props) {
-    this.bootstrap = props.bootstrap;
-    this.compassBootstrap = props.compassBootstrap;
+    this.bootstrap = props.bootstrap;    
 
     cb();
   }.bind(this));
@@ -284,7 +262,7 @@ Generator.prototype.readIndex = function readIndex() {
 };
 
 Generator.prototype.bootstrapFiles = function bootstrapFiles() {
-  var cssFile = 'styles/main.' + (this.compass ? 's' : '') + 'css';
+  var cssFile = 'styles/main.css';
   this.copy(
     path.join('app', cssFile),
     path.join(this.appPath, cssFile)
