@@ -10,7 +10,8 @@
     "angular-animate": "~<%= ngVer %>"<% } %><% if (touchModule) { %>,
     "angular-touch": "~<%= ngVer %>"<% } %><% if (routeModule) { %>,
     "angular-route": "~<%= ngVer %>"<% } %>,
-    "pureweb": "~4.1.2"
+    "pureweb": "~4.1.2",
+    "tessera": "~0.0.1"
   },
   "devDependencies": {
     "angular-mocks": "~<%= ngVer %>",

@@ -1,12 +1,13 @@
 <div class="container">
   <div class="jumbotron">  
     <div id="<%= viewName %>" class="purewebview" style="width:575px; height:575px; float:left;"></div>        
-    <textarea readonly ng-model="AppState" style="height:575px; width:400px;"/>
-    <br/><br/>      
-    <button class="btn btn-default" ng-click="generateShareUrl();">Collaborate</button>    
+    <textarea readonly ng-model="AppState" style="height:575px; width:400px;"></textarea>
+    <br/><br/>        
+    <button  <% if (bootstrap) { %>class="btn btn-default"<%}%> ng-click="generateShareUrl();">Collaborate</button>    
   </div>  
 </div>
 
+<% if (bootstrap) { %>
 <div id="pureweb_message" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -22,3 +23,4 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<% } %>

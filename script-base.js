@@ -18,6 +18,7 @@ var Generator = module.exports = function Generator() {
 
   this.cameledName = this._.camelize(this.name);
   this.classedName = this._.classify(this.name);
+  this.bootstrap = this.env.options.bootstrap;
 
   if (typeof this.env.options.appPath === 'undefined') {
     this.env.options.appPath = this.options.appPath;

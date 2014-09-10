@@ -8,7 +8,7 @@
  * Controller of the <%= scriptAppName %>
  */
 angular.module('<%= scriptAppName %>')
-  .controller('<%= classedName %>Ctrl', function ($scope) {
+  .controller('<%= classedName %>Ctrl', function ($scope, $tessera) {
     $scope.start = function(){  
 
     	//If you have malformed AngularJS code, this will protect
@@ -64,8 +64,7 @@ angular.module('<%= scriptAppName %>')
 
 	//Connected changed event handler
 	$scope.onConnectedChanged = function(e) {
-		if (e.target.isConnected()) {
-			 $('#collab_button').prop('disabled', false);
+		if (e.target.isConnected()) {			 
 			//register event listeners for connection stalled and session state failed events
 			var client = pureweb.getClient();
 			pureweb.listen(client, pureweb.client.WebClient.EventType.STALLED_CHANGED, $scope.onStalledChanged);
@@ -158,9 +157,18 @@ angular.module('<%= scriptAppName %>')
 	$scope.generateMessage = function(message){		
 		$scope.message = message;
 		$scope.$apply();
-		$('#pureweb_message').modal('show');
+		<% if (bootstrap) { %>
+    		$('#pureweb_message').modal('show');
+    	<% } else { %>
+    		alert(message);
+    	<% } %>		
 	};
 
-	$( document ).ready($scope.start);
+	<% if (bootstrap) { %>
+		$( document ).ready($scope.start);
+	<% } else { %>
+		$scope.start();
+	<% } %>	
+	
 	window.app = $scope;
 });

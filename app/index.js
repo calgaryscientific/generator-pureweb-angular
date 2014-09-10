@@ -144,7 +144,8 @@ Generator.prototype.askForBootstrap = function askForBootstrap() {
     message: 'Would you like to include Bootstrap?',
     default: true
   }], function (props) {
-    this.bootstrap = props.bootstrap;    
+    this.bootstrap = props.bootstrap; 
+    this.env.options.bootstrap = props.bootstrap   
     cb();
   }.bind(this));
 };
@@ -220,6 +221,8 @@ Generator.prototype.askForModules = function askForModules() {
     if (this.touchModule) {
       angMods.push("'ngTouch'");
     }
+
+    angMods.push("'tessera'");
 
     if (angMods.length) {
       this.env.options.angularDeps = '\n    ' + angMods.join(',\n    ') + '\n  ';
