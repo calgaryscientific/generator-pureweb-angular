@@ -16,5 +16,5 @@ mkdir my-new-project && cd $_
 
 Run `yo pureweb-angular`, optionally passing an app name:
 ```
-yo angular [app-name]
+yo pureweb-angular [app-name]
 ```

@@ -47,6 +47,7 @@ var Generator = module.exports = function Generator() {
 util.inherits(Generator, yeoman.generators.NamedBase);
 
 Generator.prototype.appTemplate = function (src, dest) {
+
   yeoman.generators.Base.prototype.template.apply(this, [
     src + this.scriptSuffix,
     path.join(this.env.options.appPath, dest.toLowerCase()) + this.scriptSuffix
@@ -60,7 +61,7 @@ Generator.prototype.testTemplate = function (src, dest) {
   ]);
 };
 
-Generator.prototype.htmlTemplate = function (src, dest) {
+Generator.prototype.htmlTemplate = function (src, dest) {  
   yeoman.generators.Base.prototype.template.apply(this, [
     src,
     path.join(this.env.options.appPath, dest.toLowerCase())
@@ -73,9 +74,9 @@ Generator.prototype.addScriptToIndex = function (script) {
     var fullPath = path.join(appPath, 'index.html');
     angularUtils.rewriteFile({
       file: fullPath,
-      needle: '<!-- endbuild -->',
+      needle: '<!-- endbuild -->',      
       splicable: [
-        '<script src="scripts/' + script.toLowerCase().replace(/\\/g, '/') + '.js"></script>'
+        '<script src="/'+this.appname+'/app/scripts/' + script.toLowerCase().replace(/\\/g, '/') + '.js"></script>'
       ]
     });
   } catch (e) {

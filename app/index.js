@@ -128,7 +128,8 @@ Generator.prototype.askForViewName = function askForViewName() {
     message: 'Would you like to call your first PureWeb view?',
     default: 'FirstView'
   }], function (props) {
-    this.viewName = props.pwView;    
+    this.viewName = props.pwView;        
+    this.env.options.viewName = props.pwView;
     cb();
   }.bind(this));
 };
@@ -143,7 +144,6 @@ Generator.prototype.askForBootstrap = function askForBootstrap() {
     default: true
   }], function (props) {
     this.bootstrap = props.bootstrap;    
-
     cb();
   }.bind(this));
 };
@@ -245,7 +245,7 @@ Generator.prototype.appJs = function appJs() {
     html: this.indexFile,
     fileType: 'js',
     optimizedPath: '/scripts/scripts.js',
-    sourceFileList: ['/'+this.appname+'/app/scripts/app.js', '/'+this.appname+'/app/scripts/controllers/main.js'],    
+    sourceFileList: ['/'+this.appname+'/app/scripts/app.js'],    
     searchPath: ['.tmp', this.appPath]
   });
 };
@@ -277,4 +277,11 @@ Generator.prototype._injectDependencies = function _injectDependencies() {
       }
     }
   });  
+};
+
+Generator.prototype.templateMainJs = function templateMainJs() {  
+  this.mainFile = this.engine(this.read('app/views/main.html'), this);
+  console.log(this.viewName);
+  console.log(this.mainFile);
+  this.write(path.join(this.appPath, '/app/views/main.html'), this.mainFile);
 };

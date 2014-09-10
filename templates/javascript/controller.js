@@ -32,7 +32,7 @@ angular.module('<%= scriptAppName %>')
         }
         
         //Initialie and setup the views
-		$scope.PrimaryView = new pureweb.client.View({id: 'ScribbleView', viewName: 'ScribbleView'});       
+		$scope.PrimaryView = new pureweb.client.View({id: '<%= viewName %>', viewName: '<%= viewName %>'});       
         $scope.setDisconnectOnUnload(true);
 		//register event listener for connected changed 
 		pureweb.listen($scope.client, pureweb.client.WebClient.EventType.CONNECTED_CHANGED, $scope.onConnectedChanged);
