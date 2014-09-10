@@ -3,8 +3,8 @@ var fs = require('fs');
 var path = require('path');
 var util = require('util');
 var angularUtils = require('../util.js');
+var pwlogo = require('../pwlogo.js');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
 var wiredep = require('wiredep');
 var chalk = require('chalk');
 
@@ -109,10 +109,10 @@ var Generator = module.exports = function Generator(args, options) {
 util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.welcome = function welcome() {
-  if (!this.options['skip-welcome-message']) {
-    this.log(yosay());
+  if (!this.options['skip-welcome-message']) {                                                                            
+    this.log(pwlogo.logo);
     this.log(
-      chalk.magenta(
+      chalk.cyan(
         'Out of the box I include PureWeb, Bootstrap and some AngularJS recommended modules.' +
         '\n'
       )
