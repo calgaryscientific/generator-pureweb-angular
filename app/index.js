@@ -12,6 +12,7 @@ var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
   this.argument('appname', { type: String, required: false });
   this.appname = this.appname || path.basename(process.cwd());
+  this.basename = path.basename(process.cwd());
   this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
 
   this.option('app-suffix', {
@@ -245,7 +246,7 @@ Generator.prototype.appJs = function appJs() {
     html: this.indexFile,
     fileType: 'js',
     optimizedPath: '/scripts/scripts.js',
-    sourceFileList: ['/'+this.appname+'/app/scripts/app.js'],    
+    sourceFileList: ['/'+this.basename+'/app/scripts/app.js'],    
     searchPath: ['.tmp', this.appPath]
   });
 };
@@ -271,8 +272,8 @@ Generator.prototype._injectDependencies = function _injectDependencies() {
     fileTypes: {
       html: {
         replace: {
-          js: '<script src="/'+this.appname+'/{{filePath}}"></script>',
-          css: '<link rel="stylesheet" href="/'+this.appname+'/{{filePath}}">'
+          js: '<script src="/'+this.basename+'/{{filePath}}"></script>',
+          css: '<link rel="stylesheet" href="/'+this.basename+'/{{filePath}}">'
         }
       }
     }
@@ -281,7 +282,5 @@ Generator.prototype._injectDependencies = function _injectDependencies() {
 
 Generator.prototype.templateMainJs = function templateMainJs() {  
   this.mainFile = this.engine(this.read('app/views/main.html'), this);
-  console.log(this.viewName);
-  console.log(this.mainFile);
-  this.write(path.join(this.appPath, '/app/views/main.html'), this.mainFile);
+  this.write(path.join(this.appPath, '/views/main.html'), this.mainFile);
 };

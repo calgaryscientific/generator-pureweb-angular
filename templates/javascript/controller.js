@@ -8,7 +8,7 @@
  * Controller of the <%= scriptAppName %>
  */
 angular.module('<%= scriptAppName %>')
-  .controller('<%= classedName %>Ctrl', function ($scope, $tessera) {
+  .controller('<%= classedName %>Ctrl', function ($scope) {
     $scope.start = function(){  
 
     	//If you have malformed AngularJS code, this will protect
