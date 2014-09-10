@@ -38,6 +38,7 @@
     "generator-karma": ">=0.8.2",
     "yo": ">=1.0.0"
   },
+  "repository": "calgaryscientific/generator-pureweb-angular",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.8.0",

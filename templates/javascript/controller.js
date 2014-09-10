@@ -161,6 +161,7 @@ angular.module('<%= scriptAppName %>')
     		$('#pureweb_message').modal('show');
     	<% } else { %>
     		alert(message);
+    		console.log(message);
     	<% } %>		
 	};
 
