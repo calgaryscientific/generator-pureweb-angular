@@ -22,7 +22,8 @@
     "main",
     "templates",
     "script-base.js",
-    "util.js"
+    "util.js",
+	"pwlogo.js"
   ],
   "scripts": {
     "test": "mocha"
