@@ -11,7 +11,7 @@
     "angular-touch": "~<%= ngVer %>"<% } %><% if (routeModule) { %>,
     "angular-route": "~<%= ngVer %>"<% } %>,
     "pureweb": "~4.1.2",
-    "tessera": "~0.0.1"
+    "tessera": "*"
   },
   "devDependencies": {
     "angular-mocks": "~<%= ngVer %>",
